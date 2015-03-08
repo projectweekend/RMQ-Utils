@@ -56,3 +56,5 @@ target/
 # Sublime Project files
 *.sublime-project
 *.sublime-workspace
+
+test_example.py
