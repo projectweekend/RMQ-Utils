@@ -32,7 +32,7 @@ class ManagementAPI(object):
             raise InvalidUser('User must have admin rights')
         return client
 
-    def post_create_handler(self):
+    def post_create_handler(self, user_key, user_creds):
         raise NotImplementedError('Method post_create_handler must be implemented')
 
 
