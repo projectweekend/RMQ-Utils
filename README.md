@@ -3,12 +3,14 @@ This is a work in progress. I had a need for some services to automate admin tas
 
 ### Account Creator
 
-This service creates and binds an admin only exchange/routing key (`account_creator`) and begins listening for messages. A new RabbitMQ user/password/virtual host will be created for each message. The resulting connection information is passed to a user-defined handler method. You to decide what to do with it from there.
+Subclass, then implement two user-defined methods:
+* One that will get a list of accounts to create
+* One that will be called upon completion of account creation
 
 
 ### Account Destroyer
 
-This service creates and binds an admin only exchange/routing key (`account_destroyer`) and begins listening for messages. Each message contains a single property (`user`) that is a user name you want deleted.
+TBD
 
 
 ### Connection Manager
