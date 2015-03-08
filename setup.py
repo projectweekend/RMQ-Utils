@@ -11,7 +11,6 @@ setup(
     description='Utilities for managing RabbitMQ.',
     long_description=open('README.txt').read(),
     install_requires=[
-        "pika == 0.9.14",
         "pyrabbit == 1.1.0",
     ],
 )
