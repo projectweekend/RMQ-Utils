@@ -18,13 +18,11 @@ class ManagementAPI(object):
         parsed = urlparse(self._url)
         if parsed.hostname != 'localhost':
             raise InvalidConnectionURL('Connection allowed to localhost only')
-        if not parsed.port:
-            raise InvalidConnectionURL('Connection URL must include a port')
         return parsed
 
-    def _connect_to_management_api(self):
+    def _connect_to_management_api(self, port):
         parsed = self._validate_connection_url()
-        host = '{0}:{1}'.format(parsed.hostname, parsed.port)
+        host = '{0}:{1}'.format(parsed.hostname, port)
         user = parsed.username
         password = parsed.password
         client = Client(host, user, password)

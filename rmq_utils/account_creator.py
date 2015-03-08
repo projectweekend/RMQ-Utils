@@ -12,13 +12,13 @@ def random_string(size=6):
 
 class AccountCreator(ManagementAPI, AsyncConsumer):
 
-    def __init__(self, rabbit_url, routing_key):
+    def __init__(self, rabbit_url, routing_key, api_port):
         self.EXCHANGE = 'rmq_utils'
         self.EXCHANGE_TYPE = 'direct'
         self.QUEUE = 'account_creator'
         self.ROUTING_KEY = routing_key
         super(AccountCreator, self).__init__(rabbit_url=rabbit_url)
-        self._management_api = self._connect_to_management_api()
+        self._management_api = self._connect_to_management_api(api_port)
 
     def _create_account(self):
         username = random_string(8)
