@@ -28,15 +28,16 @@ class AccountCreator(object):
     def _create_rabbit_account(self):
         username = self._random_string(8)
         password = self._random_string(32)
+        vhost = username
 
         self._management_api.create_user(username, password)
-        self._management_api.create_vhost(username)
-        self._management_api.set_vhost_permissions(username, username, ".*", ".*", ".*")
+        self._management_api.create_vhost(vhost)
+        self._management_api.set_vhost_permissions(vhost, username, ".*", ".*", ".*")
 
         return {
             'username': username,
             'password': password,
-            'vhost': username
+            'vhost': vhost
         }
 
     @staticmethod
