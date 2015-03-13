@@ -1,25 +1,21 @@
+import json
 import random
 import string
-from time import sleep
-from pyrabbit.api import Client
 
-from exceptions import InvalidUser
+from mixins import AsyncConsumer
+from common import connect_to_management_api
 
 
-class AccountCreator(object):
+class AccountCreator(AsyncConsumer):
 
-    def __init__(self, host, user, password, wait):
-        self._host = host
-        self._user = user
-        self._password = password
-        self._wait = wait * 0.001
-        self._management_api = self._connect_to_management_api()
-
-    def _connect_to_management_api(self):
-        client = Client(self._host, self._user, self._password)
-        if not client.has_admin_rights:
-            raise InvalidUser('User must have admin rights')
-        return client
+    def __init__(self, rabbit_url, mgmt_host, mgmt_user, mgmt_password):
+        super(AccountCreator, self).__init__(
+            rabbit_url=rabbit_url,
+            queue='account_creator',
+            exchange='rmq_utils',
+            exchange_type='direct',
+            routing_key='account_creator')
+        self._management_api = connect_to_management_api(mgmt_host, mgmt_user, mgmt_password)
 
     @staticmethod
     def _random_string(size=6):
@@ -41,21 +37,13 @@ class AccountCreator(object):
         }
 
     @staticmethod
-    def accounts_to_create():
-        """This should return a list of keys (string) representing each user to be created. \
-        Once created the key, and new user creds will be passed into the `accounts_post_create` \
-        method
-        """
-        raise NotImplementedError('Must implement method: accounts_to_create')
-
-    @staticmethod
-    def accounts_post_create(key, creds):
+    def post_create(key, creds):
         """This method gets called after each successful call to the `_create_rabbit_account` method."""
-        raise NotImplementedError('Must implement method: accounts_post_create')
+        raise NotImplementedError('Must implement method: post_create')
 
-    def start(self):
-        while True:
-            for user_key in self.accounts_to_create():
-                creds = self._create_rabbit_account()
-                self.accounts_post_create(user_key, creds)
-            sleep(self._wait)
+    def _on_message(self, unused_channel, basic_deliver, properties, body):
+        message = json.loads(body)
+        user_key = message['user_key']
+        creds = self._create_rabbit_account()
+        self.post_create(user_key, creds)
+        self._acknowledge_message(basic_deliver.delivery_tag)
