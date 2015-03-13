@@ -3,14 +3,22 @@ This is a work in progress. I had a need for some services to automate admin tas
 
 ### Account Creator
 
-Subclass, then implement two user-defined methods:
-* One that will get a list of accounts to create
-* One that will be called upon completion of account creation
+A class that makes two connections to RabbitMQ:
+* One on localhost for issuing API commands to create new users for the server.
+* One on an external URL that will receive messages for each user to create.
+
+Subclass, then implement a user-defined method:
+* One that will be called upon completion of account creation (post-create)
 
 
 ### Account Destroyer
 
-TBD
+A class that makes two connections to RabbitMQ:
+* One on localhost for issuing API commands to create new users for the server.
+* One on an external URL that will receive messages for each user to destroy.
+
+Subclass, then implement a user-defined method:
+* One that will be called upon completion of account delete (post-delete)
 
 
 ### Connection Manager
