@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='RMQ-Utils',
-    version='0.0.3',
+    version='0.0.4',
     author='Brian Hines',
     author_email='brian@projectweekend.net',
     packages=['rmq_utils'],
@@ -12,5 +12,6 @@ setup(
     long_description=open('README.txt').read(),
     install_requires=[
         "pyrabbit == 1.1.0",
+        "pika == 0.9.14",
     ],
 )
