@@ -20,7 +20,7 @@ class AccountDestroyer(AsyncConsumer):
         self._management_api.delete_vhost(username)
 
     @staticmethod
-    def post_delete(key, creds):
+    def post_delete(key):
         """This method gets called after each successful call to the `_delete_rabbit_account` method."""
         raise NotImplementedError('Must implement method: post_delete')
 
