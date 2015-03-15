@@ -22,6 +22,7 @@ from rmq_utils import AccountCreator
 
 
 RABBIT_URL = 'rabbit-url-to-listen-for-messages'
+ROUTING_KEY = 'unique-key-for-server'
 ADMIN_HOST = 'rabbit-admin-host'
 ADMIN_USER = 'admin-user'
 ADMIN_PASSWORD = 'admin-password'
@@ -39,6 +40,7 @@ class ExampleAccountCreator(AccountCreator):
 def main():
     creator = ExampleAccountCreator(
         rabbit_url=RABBIT_URL,
+        routing_key=ROUTING_KEY,
         mgmt_host=ADMIN_HOST,
         mgmt_user=ADMIN_USER,
         mgmt_password=ADMIN_PASSWORD)
@@ -74,6 +76,7 @@ from rmq_utils import AccountDestroyer
 
 
 RABBIT_URL = 'rabbit-url-to-listen-for-messages'
+ROUTING_KEY = 'unique-key-for-server'
 ADMIN_HOST = 'rabbit-admin-host'
 ADMIN_USER = 'admin-user'
 ADMIN_PASSWORD = 'admin-password'
@@ -91,6 +94,7 @@ class ExampleAccountDestroyer(AccountDestroyer):
 def main():
     destroyer = ExampleAccountDestroyer(
         rabbit_url=RABBIT_URL,
+        routing_key=ROUTING_KEY,
         mgmt_host=ADMIN_HOST,
         mgmt_user=ADMIN_USER,
         mgmt_password=ADMIN_PASSWORD)

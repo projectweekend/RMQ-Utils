@@ -8,13 +8,13 @@ from common import connect_to_management_api
 
 class AccountCreator(AsyncConsumer):
 
-    def __init__(self, rabbit_url, mgmt_host, mgmt_user, mgmt_password):
+    def __init__(self, rabbit_url, routing_key, mgmt_host, mgmt_user, mgmt_password):
         super(AccountCreator, self).__init__(
             rabbit_url=rabbit_url,
             queue='account_creator',
             exchange='rmq_utils',
             exchange_type='direct',
-            routing_key='account_creator')
+            routing_key=routing_key)
         self._management_api = connect_to_management_api(mgmt_host, mgmt_user, mgmt_password)
 
     @staticmethod

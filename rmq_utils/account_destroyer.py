@@ -6,13 +6,13 @@ from common import connect_to_management_api
 
 class AccountDestroyer(AsyncConsumer):
 
-    def __init__(self, rabbit_url, mgmt_host, mgmt_user, mgmt_password):
+    def __init__(self, rabbit_url, routing_key, mgmt_host, mgmt_user, mgmt_password):
         super(AccountDestroyer, self).__init__(
             rabbit_url=rabbit_url,
             queue='account_destroyer',
             exchange='rmq_utils',
             exchange_type='direct',
-            routing_key='account_destroyer')
+            routing_key=routing_key)
         self._management_api = connect_to_management_api(mgmt_host, mgmt_user, mgmt_password)
 
     def _delete_rabbit_account(self, username):
