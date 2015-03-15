@@ -107,4 +107,4 @@ if __name__ == '__main__':
 
 ### Connection Manager
 
-This service calls a user-defined method that supplies a map of RabbitMQ user names to integers representing the maximum number of concurrent connections allowed for each user. It checks the current number of open connections for each, if the count is above the maximum it closes connections (starting with oldest) to maintain the maximum.
+This service maintains a map of usernames to an array of connection names. It calls a user-defined method that returns a map of usernames to integers representing the maximum number of concurrent connections allowed for each. It compares the current number of open connections for each to the max, if above the maximum it closes connections to maintain the maximum.
