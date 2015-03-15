@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='RMQ-Utils',
-    version='0.0.4',
+    version='0.0.5',
     author='Brian Hines',
     author_email='brian@projectweekend.net',
     packages=['rmq_utils'],
