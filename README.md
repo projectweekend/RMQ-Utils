@@ -105,6 +105,36 @@ if __name__ == '__main__':
 ```
 
 
-### Connection Manager
+### Connection Limiter
 
-This service maintains a map of usernames to an array of connection names. It calls a user-defined method that returns a map of usernames to integers representing the maximum number of concurrent connections allowed for each. It compares the current number of open connections for each to the max, if above the maximum it closes connections to maintain the maximum.
+This service maintains a map of usernames to an array of connection names. It calls a user-defined method (`max_connections_by_user`) that returns a map of usernames to integers representing the maximum number of concurrent connections allowed for each. It compares the current number of open connections for each to the max, if above the maximum it closes connections to maintain the maximum.
+
+**Example:**
+```python
+from rmq_utils import ConnectionLimiter
+
+
+class ExampleConnectionLimiter(ConnectionLimiter):
+
+    @staticmethod
+    def max_connections_by_user():
+        # Do whatever you want here, perhaps make a call to
+        # a database to get the max connection per user
+        return {
+            'test': 1
+        }
+
+def main():
+    limiter = ExampleConnectionLimiter(
+        mgmt_host=ADMIN_HOST,
+        mgmt_user=ADMIN_USER,
+        mgmt_password=ADMIN_PASSWORD)
+    try:
+        limiter.run()
+    except KeyboardInterrupt:
+        pass
+
+
+if __name__ == '__main__':
+    main()
+```
